@@ -6,8 +6,9 @@ export class DevService implements TypeOrmOptionsFactory {
   createTypeOrmOptions(): TypeOrmModuleOptions {
     return {
       type: 'sqlite',
-      database: './db/sqlite',
+      database: './db/dev.db',
       synchronize: true,
+      autoLoadEntities: true,
     };
   }
 }
