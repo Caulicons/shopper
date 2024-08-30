@@ -11,7 +11,6 @@ export class MeasureController {
     @Body()
     body: MeasureRegisterDTO,
   ) {
-    // Upload measurements logic here
     return this.measureService.upload(body);
   }
 

@@ -24,5 +24,5 @@ export class Measure {
   @ManyToOne(() => Customer, (customer) => customer.measurements, {
     onDelete: 'CASCADE',
   })
-  customer_code: Customer;
+  customer_code: string;
 }
