@@ -58,9 +58,63 @@ export class MeasureService {
     return { image_url, measure_value, measure_uuid };
   }
 
-  async confirm({}: MeasureConfirmDTO) {}
+  async confirm({ measure_uuid, confirmed_value }: MeasureConfirmDTO) {
+    const measure = await this.measureRepository.findOne({
+      where: { measure_uuid },
+    });
 
-  async customer_measures() {}
+    if (!measure)
+      throw new HttpException(
+        'Leitura do mês já realizada',
+        HttpStatus.NOT_FOUND,
+      );
+
+    if (measure.has_confirmed)
+      throw new HttpException(
+        'Leitura do mês já confirmada',
+        HttpStatus.CONFLICT,
+      );
+
+    await this.measureRepository.save({
+      ...measure,
+      has_confirmed: true,
+      measure_value: confirmed_value,
+    });
+
+    return {
+      success: true,
+    };
+  }
+
+  async customer_measures(customer_code: string, measure_type?: string) {
+    console.log('Custom code', customer_code);
+    console.log('Type', measure_type);
+
+    if (measure_type && measure_type !== 'WATER' && measure_type !== 'GAS')
+      throw new HttpException(
+        'Tipo de medição não permitida',
+        HttpStatus.BAD_REQUEST,
+      );
+
+    const customer = await this.customerService.findMeasures(
+      customer_code,
+      measure_type,
+    );
+
+    if (!customer)
+      throw new HttpException('Cliente não encontrado', HttpStatus.NOT_FOUND);
+
+    if (!customer.measurements)
+      throw new HttpException(
+        'Nenhuma leitura encontrada',
+        HttpStatus.NOT_FOUND,
+      );
+
+    return {
+      customer_code,
+      measures: customer.measurements,
+    };
+  }
 
   private async createImageURL(uuid: string, image: string) {
     // Generate a temporary file to store the image

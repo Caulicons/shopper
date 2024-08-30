@@ -20,4 +20,11 @@ export class CustomerService {
       relations: { measurements: true },
     });
   }
+
+  async findMeasures(uuid: string, measure_type?: string) {
+    return await this.customerRepository.findOne({
+      where: { uuid: uuid, measurements: { measure_type } },
+      relations: { measurements: true },
+    });
+  }
 }
