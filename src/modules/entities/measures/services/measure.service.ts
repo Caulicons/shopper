@@ -93,15 +93,16 @@ export class MeasureService {
         HttpStatus.BAD_REQUEST,
       );
 
+    const customerExist = await this.customerService.findOne(customer_code);
+    if (!customerExist)
+      throw new HttpException('Cliente não encontrado', HttpStatus.NOT_FOUND);
+
     const customer = await this.customerService.findMeasures(
       customer_code,
       measure_type,
     );
 
-    if (!customer)
-      throw new HttpException('Cliente não encontrado', HttpStatus.NOT_FOUND);
-
-    if (!customer.measurements)
+    if (!customer || !customer.measurements)
       throw new HttpException(
         'Nenhuma leitura encontrada',
         HttpStatus.NOT_FOUND,
