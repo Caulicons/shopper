@@ -8,6 +8,6 @@ import { CustomerService } from './services/customer.service';
   imports: [TypeOrmModule.forFeature([Customer])],
   controllers: [CustomerController],
   providers: [CustomerService],
-  exports: [TypeOrmModule],
+  exports: [TypeOrmModule, CustomerService],
 })
 export class CustomerModule {}

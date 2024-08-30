@@ -10,5 +10,14 @@ export class CustomerService {
     private readonly customerRepository: Repository<Customer>,
   ) {}
 
-  async create() {}
+  async create() {
+    return await this.customerRepository.save({});
+  }
+
+  async findOne(uuid: string) {
+    return await this.customerRepository.findOne({
+      where: { uuid },
+      relations: { measurements: true },
+    });
+  }
 }
