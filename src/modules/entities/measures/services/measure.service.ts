@@ -35,7 +35,7 @@ export class MeasureService {
 
     if (alreadyRegister)
       throw new HttpException(
-        `Leitura do mês ${new Date(body.measure_datetime).getMonth() + 1} já realizada type ${body.measure_type} `,
+        `Leitura de ${body.measure_type} do mês ${new Date(body.measure_datetime).getMonth() + 1} já realizada`,
         HttpStatus.CONFLICT,
       );
 
@@ -87,9 +87,6 @@ export class MeasureService {
   }
 
   async customer_measures(customer_code: string, measure_type?: string) {
-    console.log('Custom code', customer_code);
-    console.log('Type', measure_type);
-
     if (measure_type && measure_type !== 'WATER' && measure_type !== 'GAS')
       throw new HttpException(
         'Tipo de medição não permitida',
