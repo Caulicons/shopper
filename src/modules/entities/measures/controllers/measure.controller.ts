@@ -10,7 +10,9 @@ import {
 import { MeasureConfirmDTO } from '../dto/measure.confirm.dto';
 import { MeasureRegisterDTO } from '../dto/measure.register.dto';
 import { MeasureService } from '../services/measure.service';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Measures')
 @Controller()
 export class MeasureController {
   constructor(private measureService: MeasureService) {}
@@ -30,6 +32,12 @@ export class MeasureController {
     return this.measureService.confirm(body);
   }
 
+  @ApiQuery({
+    name: 'measure_type',
+    description: 'Measure type can only be WATER or GAS',
+    type: String,
+    required: false,
+  })
   @Get(':customerCode/list')
   customerMeasures(
     @Param('customerCode') customerCode: string,
