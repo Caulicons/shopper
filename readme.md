@@ -16,6 +16,7 @@ Project to check meters of WATER and GAS using Gemini Vision API
 ```bash
 $ docker compose up
 ```
+After run docker compose open http://localhost:4000 to see swagger documentation.
 
 ## Using the project
 First of all, to check the meters you need to create a "customer" to have a "customer_uuid", you can get one by making a POST request to http://localhost:4000/customer, with your "customer_uuid" now you can send meter images to the path http://localhost:4000/upload to be analyzed.
