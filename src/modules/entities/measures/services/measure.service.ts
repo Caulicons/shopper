@@ -63,12 +63,8 @@ export class MeasureService {
       where: { measure_uuid },
     });
 
-    // It meant to be "not found", but the documentation request to return in this way
     if (!measure)
-      throw new HttpException(
-        'Leitura do mês já realizada',
-        HttpStatus.NOT_FOUND,
-      );
+      throw new HttpException('Leitura não encontrada', HttpStatus.NOT_FOUND);
 
     if (measure.has_confirmed)
       throw new HttpException(
