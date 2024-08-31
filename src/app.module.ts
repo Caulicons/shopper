@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CustomerModule } from './modules/entities/customer/customer.module';
@@ -27,6 +26,5 @@ import { DevService } from './database/services/dev.service';
     GeminiModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
